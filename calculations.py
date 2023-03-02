@@ -359,8 +359,8 @@ with tab2:
     next_friday = vertical_date + pd.Timedelta(days_to_friday, unit='D')
 
     # Add the date input widgets
-    start_date = st.sidebar.date_input('Start Date', value=pd.Timestamp(vertical_date))
-    end_date = st.sidebar.date_input('End Date', value=pd.Timestamp(next_friday))
+    start_date = st.sidebar.date_input('Options expiration from:', value=pd.Timestamp(vertical_date))
+    end_date = st.sidebar.date_input('Options expiration to:', value=pd.Timestamp(next_friday))
 
     date_range = format_date_range(start_date, end_date)
 

@@ -85,7 +85,7 @@ with tab1:
         st.write(f"Change: **{round(difference, 2)}%**")
     with col2:
         # Add sliders for the vertical date and target value
-        vertical_date = (datetime.now() + timedelta(days=15)).date()
+        vertical_date = (datetime.now() + timedelta(days=13)).date()
         vertical_date = st.date_input('Expiration Date', value=vertical_date)
         # Define the US Federal Holiday Calendar
         cal = USFederalHolidayCalendar()

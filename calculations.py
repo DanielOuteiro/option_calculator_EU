@@ -365,8 +365,8 @@ with tab2:
     date_range = format_date_range(start_date, end_date)
 
     # Add the strike range pickers
-    strike_abs_start = st.sidebar.text_input('Only strikes above:', value='')
-    strike_abs_end = st.sidebar.text_input('Only strikes under:', value='')
+    strike_abs_start = st.sidebar.text_input('[Can be empty] Only strikes above:', value='3850')
+    strike_abs_end = st.sidebar.text_input('[Can be empty] Only strikes under:', value='4000')
     if strike_abs_start and strike_abs_end:
         params['strikeAbsRange'] = f"{strike_abs_start};{strike_abs_end}"
 

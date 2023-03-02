@@ -24,7 +24,7 @@ import webbrowser
 
 
 
-tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "Current Options"])
+tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "Current Options [WIP]"])
 
 with tab1:
     # Set the page title and sidebar
@@ -829,82 +829,4 @@ with tab2:
 
 
 with tab3:
-    current_options = [241806699, 230873295, 241217422, 240917440]
-    wkn_options = ['GZ8N1N', "VV01PU", "JS69K1", "VU2WLB"]
-    bought_at = [0.59633, 0.08795, 0.037, 0.08]
-    how_many_bought = [150, 1000, 2500, 1100]
-    
-    # Initialize variables for the running totals
-    total_investment = 0
-    total_current_value = 0
-    total_profit_loss = 0
-    
-
-    # Create a column for each option
-    cols = st.columns(len(current_options))
-
-    for i, option in enumerate(current_options):
-        with cols[i]:
-            # Make the API request to get the instrument details
-            wkn = wkn_options[i]
-            url = f"https://api.onvista.de/api/v1/instruments/query?limit=5&searchValue={wkn}"
-            response = requests.get(url)
-            response_json = response.json()
-
-            opti_name = response_json['list'][0]['name']
-
-            # Split the string on forward slashes and extract the desired parts
-            parts = opti_name.split('/')
-            underlying = parts[1]
-            strike = parts[2]
-            expiration = parts[-1]
-
-            # Print the extracted parts
-            st.write(f"Underlying: {underlying}")
-            st.write(f"Strike: {strike}")
-            st.write(f"Expiration: {expiration}")
-
-            # Get the website URL for the instrument
-            website_url = response_json['list'][0]['urls']['WEBSITE']
-
-            # Wrap the code inside a spinner
-            with st.spinner(f"Fetching options data for option {i+1}..."):
-                # Make the API request to get the calculator result for the current option
-                url = f'https://api.onvista.de/api/v1/derivatives/{option}/calculatorResult'
-                response = requests.get(url)
-                calculator_result = response.json()
-
-                # Get the bid price for the current option
-                bid_price = calculator_result['bidPriceInstrument']
-
-                # Calculate the investment made and current value of the option
-                investment_made = bought_at[i] * how_many_bought[i]
-                current_value_option = bid_price * how_many_bought[i]
-
-                # Calculate the profit or loss
-                profit_or_loss = current_value_option - investment_made
-
-                # Add the values to the running totals
-                total_investment += investment_made
-                total_current_value += current_value_option
-                total_profit_loss += profit_or_loss
-
-                # Display the results
-                st.metric(label=f"Investment: {investment_made:.2f}€", value=f"{current_value_option:.2f}€", delta=f"{profit_or_loss:.0f}%")
-
-                if st.button(f"View {wkn}"):
-                    webbrowser.open(website_url)
-                
-
-    with st.expander("Total"):            
-    
-        col10, col11, col12 = st.columns(3)
-
-        col10.metric(label="Total Investment", value=f"{total_investment:.2f}€")
-        col11.metric(label="Total Current Value", value=f"{total_current_value:.2f}€")
-        col12.metric(label="Total Profit/Loss", value=f"{total_profit_loss:.2f}€")   
-
-        
-        
-    
-          
+    st.write("WIP")

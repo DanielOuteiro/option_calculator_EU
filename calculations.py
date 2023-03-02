@@ -15,7 +15,6 @@ import numpy as np
 import time
 import seaborn as sns
 from scipy import stats
-#import matplotlib.colors as colors
 import webbrowser
 
 
@@ -24,7 +23,7 @@ import webbrowser
 
 
 
-tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "Current Options [WIP]"])
+tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "My Options [WIP]"])
 
 with tab1:
     # Set the page title and sidebar

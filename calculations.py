@@ -26,19 +26,16 @@ import webbrowser
 tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "My Options [WIP]"])
 
 with tab1:
-    # Define the ticker symbols and their labels
-    symbols = {'^GSPC': 'SP500', '^GDAXI': 'DAX'}
+    # Set the page title and sidebar
+    #st.sidebar.title('Options Data Parameters')
+    st.sidebar.subheader('Scenario probability Parameters')
+    
+    # Define a list of ticker symbols to choose from
+    symbols = ['^GSPC', '^GDAXI']
 
     # Define the ticker symbol for the S&P 500
-    tickerSymbol = st.sidebar.selectbox('Ticker Symbol', list(symbols.keys()))
-
-    # Get the label for the selected ticker symbol
-    tickerLabel = symbols[tickerSymbol]
-
-    # Display the selected ticker symbol and its label
-    st.write('Selected Ticker Symbol:', tickerSymbol)
-    st.write('Ticker Symbol Label:', tickerLabel)
-
+    tickerSymbol = st.sidebar.selectbox('Ticker Symbol', symbols)
+    
     # Define a function to download the data for a given ticker symbol and date range
     @st.cache_data(ttl=3600)
     def load_data(symbol, start_date, end_date):

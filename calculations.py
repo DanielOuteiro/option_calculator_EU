@@ -23,18 +23,21 @@ import webbrowser
 
 
 
-tab1, tab2, tab3 = st.tabs(["Scenario probability", "Option Finder", "My Options [WIP]"])
+tab1, tab2, tab3, tab4 = st.tabs(["Scenario probability", "Option Finder", "Current Options [WIP]", "Known Errors and Todo"])
 
 with tab1:
     # Set the page title and sidebar
     #st.sidebar.title('Options Data Parameters')
     st.sidebar.subheader('Scenario probability Parameters')
     
-    # Define a list of ticker symbols to choose from
-    symbols = ['^GSPC', '^GDAXI']
+    # Define a dictionary of ticker symbols and their labels
+    symbols = {'SP500': '^GSPC', 'DAX': '^GDAXI'}
 
-    # Define the ticker symbol for the S&P 500
-    tickerSymbol = st.sidebar.selectbox('Ticker Symbol', symbols)
+    # Get the selected ticker symbol and its corresponding label
+    tickerLabel = st.sidebar.selectbox('Ticker Symbol', list(symbols.keys()))
+
+    # Get the actual ticker symbol from the dictionary
+    tickerSymbol = symbols[tickerLabel]
     
     # Define a function to download the data for a given ticker symbol and date range
     @st.cache_data(ttl=3600)
@@ -179,14 +182,14 @@ with tab1:
 
     # Add the vertical line
     ax.axvline(vertical_date, color='black')
-    ax.axvline(pd.to_datetime(end_date), color='b', linewidth=0.5)
+    #ax.axvline(pd.to_datetime(end_date), color='b', linewidth=0.5)
 
     max_asvalue = current_price + ((max_change/100) * current_price)
     min_asvalue = current_price + ((min_change/100) * current_price)
 
     # Add the horizontal line
-    ax.axhline(target, color='black')
-    ax.axhline(current_price, color='b', linewidth=0.5)
+    ax.axhline(target, color='black', label=f"Your target: {target}")
+    #ax.axhline(current_price, color='b', linewidth=0.5)
     ax.axhline(max_asvalue, color='g', linestyle='--', label=f"Max climb in {days} days: {max_change:.2f}%")
     ax.axhline(min_asvalue, color='r', linestyle='--', label=f"Max drop in {days} days: {min_change:.2f}%")
     ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), ncol=1)
@@ -829,3 +832,22 @@ with tab2:
 
 with tab3:
     st.write("WIP")
+    
+    
+with tab4:
+    st.write("**Known errors**")
+    st.caption("- Probabilities for Calls are wrong")
+    st.caption("- When loading a big history range the app slows down")
+    st.caption("- DAX options fail more often because the ammount of options available is huge compared to the SP500, and should be filtered by using the filter parameters")    
+    st.caption("- The spread calculation is wrong on the option details")    
+    st.caption("- EU options expire on Fridays. The calculator only works until -1 of Fridays, so it is advised to choose deadlines as Thursdays ")
+    st.caption("- Caching is not implemented, some UI selections will restart the search, such as Investment, which makes no sense")
+    st.caption("- Different Expiration dates represented with color on the scatter plot is glitchy")         
+    
+    st.write("**Todo**")
+    st.caption("- Merge the columns of the probabilities with the main graph, so the user can see directly on the graph, the areas of move with more probability")
+    st.caption("- Improve chart zoom")
+    st.caption("- Allow user to define target+deadline directly on the graph itself")    
+    st.caption("- Allow user to see calculation matrix directly by selecting a point on the scatter plot")
+    st.caption("- Compare two options calculation matrix side by side")    
+    

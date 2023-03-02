@@ -56,7 +56,7 @@ with tab1:
 
     # Retrieve the data for the selected ticker symbol
     end_date = pd.Timestamp.now().date()
-    start_date = st.sidebar.date_input('Load Historical data', value=pd.Timestamp('2022-01-01').date())
+    start_date = st.sidebar.date_input('Load Historical data since:', value=pd.Timestamp('2022-01-01').date())
     all_tickerDf, tickerDf = load_data(tickerSymbol, start_date, end_date)
 
 
